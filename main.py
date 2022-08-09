@@ -1,6 +1,8 @@
 from urllib import response
 import requests
 import json
+import datetime
+
 
 
 class N2YO:
@@ -28,12 +30,14 @@ def parsePasses(data):
     else:
         for i in range(int(count)):
             maxEl = passes[i]["maxEl"]
-            startUTC = passes[i]["startUTC"]
-            endUTC = passes[i]["endUTC"]
+            startUTC = datetime.datetime.fromtimestamp(int(passes[i]["startUTC"]))
+            endUTC = datetime.datetime.fromtimestamp(int(passes[i]["endUTC"]))
             toRet += "============================\n"
             toRet += "Pass {}: {} - {}\n".format(i, startUTC, endUTC)
             toRet += "Max Elevation: {}\n".format(maxEl)
-            toRet += "Azimuth: {}\n".format(passes[i]["maxAz"])
+            toRet += "Azimuth: {}".format(passes[i]["maxAz"])
+            if (i != int(count) - 1):
+                toRet += "\n"
             
     return toRet
 
@@ -43,10 +47,8 @@ sat_list = data["sat_list"]
 
 
 if data["isFirstTime"] == 1:
-    print("Enter your latitude:")
-    lat = input()
-    print("Enter your longitude:")
-    long = input()
+    lat = input("Enter your latitude: ")
+    long = input("Enter your longitude: ")
     data["lat"] = lat
     data["long"] = long
     data["isFirstTime"] = 0
@@ -56,10 +58,8 @@ else:
     lat = data["lat"]
     long = data["long"]
 alt = 0
-print("Enter the minimum elevation:")
-min_elevation = input()
-print("Enter the number of days to search:")
-days = input()
+min_elevation = input("Enter the minimum elevation: ")
+days = input("Enter the number of days to search: ")
 
 print("Making request...")
 
