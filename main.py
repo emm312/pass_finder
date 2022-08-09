@@ -63,7 +63,7 @@ days = input("Enter the number of days to search: ")
 
 print("Making request...")
 
-client = N2YO("YOUR_API_KEY")
+client = N2YO("YRBJSY-8E9X68-VNZYKD-4WH7")
 for i in range(len(sat_list)):
     response = client.get_radiopass(sat_list[i], lat, long, alt, min_elevation, days)
     data = response.json()
